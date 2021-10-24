@@ -6,6 +6,7 @@ const uploadImage = require("../middlewares/uploadImage");
 
 router.get("/", companyController.getCompanies);
 router.get("/find/:id", companyController.getCompany);
+router.get("/find/:id/employe", companyController.getCompanyElmpoyes);
 router.get("/find/name/search", companyController.getCompanyByName);
 router.get("/find/location/search", companyController.getCompanyByLocation);
 router.get("/find/industry/search", companyController.getCompanyByIndustry);

@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
     }
 
     const loggedUser = await User.findOne({ _id: user._id }).select(
-      "_id firstName lastName email isAdmin"
+      "_id username profilePict email isAdmin"
     );
 
     const token = jwt.sign({ data: loggedUser }, process.env.JWT_SECRET, {

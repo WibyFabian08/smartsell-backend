@@ -4,7 +4,7 @@ const fs = require("fs");
 exports.getCompanies = async (req, res) => {
   try {
     const companies = await Company.find().select(
-      "id name industry city phone website email companyPict"
+      "id name industry city phone website email companyPict province address country"
     );
 
     return res.status(200).json(companies);
@@ -18,7 +18,7 @@ exports.getCompanies = async (req, res) => {
 exports.getCompany = async (req, res) => {
   try {
     const company = await Company.findOne({ _id: req.params.id }).select(
-      "id name industry city phone website email companyPict"
+      "id name industry city phone website email companyPict province address country employeId"
     );
 
     if (!company) {
@@ -28,6 +28,23 @@ exports.getCompany = async (req, res) => {
     }
 
     return res.status(200).json(company);
+  } catch (err) {
+    return res.status(500).json({
+      message: "something went wrong",
+    });
+  }
+};
+
+exports.getCompanyElmpoyes = async (req, res) => {
+  try {
+    const companyEmployes = await Company.findOne({ _id: req.params.id })
+      .select("_id name employeId")
+      .populate({
+        path: "employeId",
+        select: "_id name personalPhone officePhone email position",
+      });
+
+    return res.status(200).json(companyEmployes);
   } catch (err) {
     return res.status(500).json({
       message: "something went wrong",

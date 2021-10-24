@@ -63,3 +63,22 @@ exports.editUser = async (req, res) => {
     });
   }
 };
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    const path = `public/${user.profilePict}`;
+    fs.unlink(path, (err) => console.log(err));
+
+    await User.findByIdAndDelete(user._id);
+
+    return res.status(200).json({
+      message: "user deleted",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "something went wrong",
+    });
+  }
+};

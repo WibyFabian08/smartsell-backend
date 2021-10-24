@@ -77,7 +77,7 @@ exports.createUserTarget = async (req, res) => {
 
 exports.deleteUserTarget = async (req, res) => {
   try {
-    await UserTarget.deleteOne({ _id: req.params.id });
+    await UserTarget.deleteOne({ employeId: req.params.id });
 
     return res.status(200).json({
       message: "deleted",

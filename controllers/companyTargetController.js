@@ -71,7 +71,7 @@ exports.createCompanyTarget = async (req, res) => {
 
 exports.deleteCompanyTarget = async (req, res) => {
   try {
-    await CompanyTarget.deleteOne({ _id: req.params.id });
+    await CompanyTarget.deleteOne({ companyId: req.params.id });
 
     return res.status(200).json({
       message: "deleted",
