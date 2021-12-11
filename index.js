@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const cors = require('cors')
 const path = require("path");
 
 const authRouter = require("./routes/auth");
@@ -12,15 +13,16 @@ const userTargetRouter = require("./routes/userTarget");
 const companyTargetRouter = require("./routes/companyTarget");
 
 // cors origin
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+//   );
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   next();
+// });
+app.use(cors())
 
 dotenv.config();
 app.use(express.json({ urlencoded: true, limit: "50mb" }));
