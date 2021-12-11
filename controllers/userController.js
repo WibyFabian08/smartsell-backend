@@ -19,7 +19,7 @@ exports.getUsers = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params.id }).select(
-      "_id username email profilePict company address province city phone isAdmin"
+      "_id username email profilePict company address province city phone isAdmin postCode"
     );
 
     return res.status(200).json(user);
