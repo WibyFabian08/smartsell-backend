@@ -1,5 +1,7 @@
 const Employe = require("../models/Employe");
 const Company = require("../models/Company");
+const importExcel = require("convert-excel-to-json");
+const fs = require('fs');
 
 exports.getEmployes = async (req, res) => {
   try {
@@ -30,6 +32,45 @@ exports.getEmploye = async (req, res) => {
     return res.status(500).json({ message: "something went wrong" });
   }
 };
+
+exports.createByExcel = async (req, res) => {
+  try {
+    let result = importExcel({
+      sourceFile: "public/excel/" + req.file.originalname,
+      header: { rows: 1 },
+      columnToKey: {
+        A: "kode",
+        B: 'judul',
+        C: 'keterangan'
+      },
+      sheets: ["Sheet1"],
+    });
+
+    let data = [];
+
+    for(let i = 0; result.Sheet1.length > i; i++) {
+      data.push(result.Sheet1[i])
+    }
+
+    const path = 'public/excel/' + req.file.originalname;
+
+    fs.unlink(path, (err) => console.log(err));
+
+    console.log(data)
+
+    res.status(200).json({
+      message: "excel data",
+      data: req.file,
+      data,
+    });
+  } catch (err) {
+    console.log(err.stack);
+    return res.status(500).json({
+      message: "error",
+    });
+  }
+},
+
 
 exports.createEmploye = async (req, res) => {
   try {
